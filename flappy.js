@@ -4,8 +4,12 @@
 function gameLoop()
 {
     var canvas = document.getElementById('canvas');
+    score = 0;
+    var scoreBoard = document.getElementById('score');
+    scoreBoard.innerText = score;
     pipes = [];
     upArrow = false;
+    lastPipe = null;
     var context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
     var flappy = new player();
@@ -38,10 +42,13 @@ function draw(player)
     for(var i = 0; i < pipes.length; ++i)
     {
         var pipe = pipes[i];
+        context.fillStyle = 'red';
         context.fillRect(pipe.x,0,pipe.width,pipe.y);
         context.fillRect(pipe.x,pipe.y + 125,pipe.width,450 - (pipe.y + 125));
         //left, starting pixel, width, height
     }
+    context.lineWidth = 10;
+    context.strokeRect(0, 0, 800, 450);
 }
 
 function updatePlayer(player){
@@ -73,7 +80,7 @@ function updatePipes()
         pipe.x -= 3;
         if(pipe.x <= 0)
         {
-            pipe.y = (Math.random() * 400) + 25;
+            pipe.y = (Math.random() * 300) + 25;
             pipe.x = 800;
         }
     }
@@ -90,6 +97,16 @@ function checkCollisions(player)
             {
                 alert('You died');
                 window.clearInterval(interval);
+            }
+            else
+            {
+                if(lastPipe != pipe)
+                {
+                    lastPipe = pipe;
+                    score += 1;
+                    var scoreBoard = document.getElementById('score');
+                    scoreBoard.innerText = score;
+                }
             }
         }
     }
@@ -128,3 +145,5 @@ var upArrow = false;
 var image = new Image;
 var interval;
 image.src = "flappy.png";
+var score = 0;
+var lastPipe;
