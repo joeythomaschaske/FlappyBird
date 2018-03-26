@@ -1,6 +1,15 @@
 /**
  * Created by josephthomaschaske on 3/1/16.
  */
+
+var pipes = [];
+var upArrow = false;
+var image = new Image;
+var interval;
+image.src = "flappy.png";
+var score = 0;
+var lastPipe;
+
 function gameLoop()
 {
     var canvas = document.getElementById('canvas');
@@ -139,11 +148,3 @@ window.onkeyup = function(e)
         console.log('up is not pressed');
     }
 }
-
-var pipes = [];
-var upArrow = false;
-var image = new Image;
-var interval;
-image.src = "flappy.png";
-var score = 0;
-var lastPipe;
